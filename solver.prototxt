@@ -1,0 +1,17 @@
+net: "/home/train.prototxt"
+test_iter:342
+test_interval: 500
+base_lr:0.01
+iter_size:2
+test_initialization: false
+display: 100
+lr_policy: "poly"  
+max_iter:300000
+power: 1
+momentum: 0.9
+weight_decay: 0.0005
+snapshot: 500
+snapshot_prefix: "/home/models/"
+random_seed: 0
+solver_mode: GPU
+
