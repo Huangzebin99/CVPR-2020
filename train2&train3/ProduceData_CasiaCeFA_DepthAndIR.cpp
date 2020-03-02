@@ -18,7 +18,7 @@ using namespace cv;
 #define TRAIN3
 #define TEST
 
-// ÎªÍ¼ÏñÌí¼ÓÁÁ°ß
+// ä¸ºå›¾åƒæ·»åŠ äº®æ–‘
 void gAddBrightPoint(const Mat& djSrcImg, Mat& djDstImg, const Mat& djBackImg)
 {
 	djDstImg = djSrcImg.clone();
@@ -47,7 +47,7 @@ void gAddBrightPoint(const Mat& djSrcImg, Mat& djDstImg, const Mat& djBackImg)
 	}
 }
 
-//ÁÁ¶ÈÅĞ¶Ï
+//äº®åº¦åˆ¤æ–­
 int gJudgeLight(const Mat& djSrc)
 {
 	Mat Mask, Back;
@@ -87,7 +87,7 @@ int gJudgeLight(const Mat& djSrc)
 	return 0;
 }
 
-// Í¼ÏñĞ£Õı
+// å›¾åƒæ ¡æ­£
 void gCorrect(Mat& djSrcDepthImg)
 {
 	/*Mat djBacImg(djSrcDepthImg.size() * 3, CV_8UC3, Scalar(0, 0, 0));
@@ -137,7 +137,7 @@ void gCorrect(Mat& djSrcDepthImg)
 	cvtColor(dwDstImg, dwDstImg, CV_BGR2GRAY);
 	cv::threshold(dwDstImg, dwDstImg, 1, 255, THRESH_BINARY);
 
-	dilate(dwDstImg, dwDstImg, structure_element); //ÅòÕÍ
+	dilate(dwDstImg, dwDstImg, structure_element); //è†¨èƒ€
 
 	for (int i = 0;i < dwDstImg.rows;i++)
 	{
@@ -163,7 +163,7 @@ void gCorrect(Mat& djSrcDepthImg)
 int main()
 {
 	// Augmentation Depth
-	ifstream ftp("./train/train_3/4@3_img_ir.txt");	// ÑµÁ·Êı¾İ£¬½ö°üº¬Ã¿¸öidÏÂ¡±ir¡°×ÓÎÄ¼ş¼ĞÏÂµÄËùÓĞÍ¼Æ¬ºÍ¡±profile¡°×ÓÎÄ¼ş¼ĞÏÂµÄËùÓĞÍ¼Æ¬
+	ifstream ftp("./train/train_3/4@3_img_ir.txt");	// è®­ç»ƒæ•°æ®ï¼Œä»…åŒ…å«æ¯ä¸ªidä¸‹â€irâ€œå­æ–‡ä»¶å¤¹ä¸‹çš„æ‰€æœ‰å›¾ç‰‡å’Œâ€profileâ€œå­æ–‡ä»¶å¤¹ä¸‹çš„æ‰€æœ‰å›¾ç‰‡
 
 	string lines, linesIR;
 
@@ -184,7 +184,7 @@ int main()
 			Mat djSrcIRImg = imread(lines);
 			Mat djSrcDepthImg = imread(linesDepth);
 
-			if (1 == gJudgeLight(djSrcDepthImg))	//ÕâÀïÅĞ¶ÏÉî¶ÈÍ¼ÁÁ¶È£¬´óÓÚÒ»¶¨ÁÁ¶ÈµÄÖ±½Óµ±³ÉÕæÈË
+			if (1 == gJudgeLight(djSrcDepthImg))	//è¿™é‡Œåˆ¤æ–­æ·±åº¦å›¾äº®åº¦ï¼Œå¤§äºä¸€å®šäº®åº¦çš„ç›´æ¥å½“æˆçœŸäºº
 			{
 				gCorrect(djSrcIRImg);
 				string StoreName2 = linesIR.substr(0, linesIR.length() - 4) + "_crop.jpg";
@@ -192,11 +192,11 @@ int main()
 				continue;
 			}
 
-			// Í¼ÏñĞı×ªĞ£Õı
+			// å›¾åƒæ—‹è½¬æ ¡æ­£
 			gCorrect(djSrcDepthImg);
 			gCorrect(djSrcIRImg);		
 
-			// Éî¶ÈÍ¼Ïñ´¦Àí
+			// æ·±åº¦å›¾åƒå¤„ç†
 			cvtColor(djSrcDepthImg, djSrcDepthImg, CV_BGR2GRAY);
 
 			int MaxV = 0;
@@ -249,12 +249,12 @@ int main()
 			string StoreName2 = linesIR.substr(0, linesIR.length() - 4) + "_crop.jpg";
 			imwrite(StoreName2, djSrcIRImg, compression_params);			
 		}
-		else if (lines.find("profile") != string::npos && lines.find("real") != string::npos)
+		else if (lines.find("profile") != string::npos)
 		{
 #ifdef TEST
 			continue;
 #endif
-			// Ê¹ÓÃ RGBÍ¼Ïñ×ª IRÍ¼Éú³ÉÃæ¾ß¹¥»÷
+			// ä½¿ç”¨ RGBå›¾åƒè½¬ IRå›¾ç”Ÿæˆé¢å…·æ”»å‡»
 			Mat djSrcImg = imread(lines);
 			gCorrect(djSrcImg);
 
@@ -264,7 +264,7 @@ int main()
 			Mat djMaskBack;
 			threshold(djSrcImg, djMaskBack, 0, 255, CV_THRESH_BINARY);
 
-			// Ë«±ßÂË²¨Ä¥Æ¤
+			// åŒè¾¹æ»¤æ³¢ç£¨çš®
 			int dwKernel = rand() % 10 + 5;	
 			Mat djTemp;
 			bilateralFilter(djSrcImg, djTemp, dwKernel, dwKernel * 5, dwKernel / 2);
@@ -277,10 +277,10 @@ int main()
 				}
 			}
 
-			// Ëæ»úÅĞ¶ÏÊÇ·ñ½øĞĞÄ£ºı
+			// éšæœºåˆ¤æ–­æ˜¯å¦è¿›è¡Œæ¨¡ç³Š
 			if (0 == rand() % 2)	
 			{
-				//Ëæ»úÅĞ¶ÏÊÇ·ñÌí¼ÓÁÁ°ß
+				//éšæœºåˆ¤æ–­æ˜¯å¦æ·»åŠ äº®æ–‘
 				if (0 == rand() % 2)
 				{
 					gAddBrightPoint(djSrcImg, djSrcImg, djMaskBack);
