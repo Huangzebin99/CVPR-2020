@@ -16,3 +16,6 @@
 注：
 1.)时间比较紧，代码和逻辑整理得不是很好，如有遇到什么问题，请及时联系我，我将第一时间回复，谢谢！
 2.)train1/train2/train3 图像处理方式不同，因此测试集需要根据训练集的不同，每次测试时，按照训练集数据生成的格式重新生成数据。
+
+2020/03/03 更新了小bug。
+1.）“ProduceData_CasiaCeFA_depth.cpp”中第155行更改为cvtColor(djSrcImg3, djSrcImg3, COLOR_BGR2YCrCb);
