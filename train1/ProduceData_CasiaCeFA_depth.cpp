@@ -152,14 +152,14 @@ int main()
 				
 			Mat djSrcImg3=djSrcImg.clone();
 			vector<Mat> yuv;
-			cvtColor(djSrcImg, djSrcImg3, COLOR_BGR2YCrCb);
+			cvtColor(djSrcImg3, djSrcImg3, COLOR_BGR2YCrCb);
 			split(djSrcImg3, yuv);
 
 			//equalize Y
 			equalizeHist(yuv[0], yuv[0]);
 
 			//merge channels	
-			merge(yuv, djSrcImg);
+			merge(yuv, djSrcImg3);
 			cvtColor(djSrcImg3, djSrcImg3, COLOR_YCrCb2BGR);
 
 			for (int i = 0;i < djSrcImg.rows;i++)
