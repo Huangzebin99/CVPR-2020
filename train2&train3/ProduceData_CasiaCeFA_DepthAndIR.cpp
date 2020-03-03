@@ -249,7 +249,7 @@ int main()
 			string StoreName2 = linesIR.substr(0, linesIR.length() - 4) + "_crop.jpg";
 			imwrite(StoreName2, djSrcIRImg, compression_params);			
 		}
-		else if (lines.find("profile") != string::npos)
+		else if (lines.find("profile") != string::npos && lines.find("real") != string::npos)
 		{
 #ifdef TEST
 			continue;
